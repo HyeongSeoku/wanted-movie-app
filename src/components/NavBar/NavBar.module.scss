@@ -1,0 +1,20 @@
+@use '../../styles/constants/colors';
+
+.footer {
+  position: relative;
+  transform: translateY(-100%);
+}
+
+.navList {
+  display: flex;
+  flex-direction: row;
+}
+
+.navItem {
+  width: 50%;
+  text-align: center;
+
+  &:hover {
+    background-color: colors.$GRAYA;
+  }
+}
