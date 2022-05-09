@@ -1,5 +1,5 @@
 {
-  "extends": ["airbnb", "airbnb/hooks", "react-app", "prettier"],
+  "extends": ["airbnb","airbnb-typescript", "airbnb/hooks", "react-app", "prettier"],
   "env": {
     "browser": true,
     "jasmine": true,
@@ -76,7 +76,9 @@
       "ignorePackages",
       {
         "js": "never",
-        "jsx": "never"
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
       }
     ]
   }
