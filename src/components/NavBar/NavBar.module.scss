@@ -8,13 +8,28 @@
 .navList {
   display: flex;
   flex-direction: row;
+  height: 2rem;
 }
 
 .navItem {
   width: 50%;
+  height: 100%;
   text-align: center;
+  opacity: 0.4;
+}
+
+.navButton {
+  width: 100%;
+  height: 100%;
+  font-size: 1.2rem;
+  color: colors.$WHITE;
+  border-radius: 8px;
 
   &:hover {
     background-color: colors.$GRAYA;
   }
+}
+
+.clicked {
+  opacity: 1;
 }
