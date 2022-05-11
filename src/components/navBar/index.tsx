@@ -3,10 +3,10 @@ import { useRecoilState } from 'recoil'
 import cx from 'classnames'
 import { currentNav } from '../../utils/atoms/atom'
 import { NAV_DATA } from '../../utils/constants/componentsData'
-import styles from './.navBar.module.scss'
+import styles from './navBar.module.scss'
 import { Link, useNavigate } from 'react-router-dom'
 
-const NavBar = () => {
+const NavBar = (): JSX.Element => {
   const [clickedtNav, setClickedNav] = useRecoilState<string>(currentNav)
   const navigate = useNavigate()
 
