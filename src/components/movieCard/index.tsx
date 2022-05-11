@@ -1,19 +1,19 @@
 import styles from './movieCard.module.scss'
-import { ApiResData } from '../../types/types.d'
+import { ApiResData, SearchModule } from '../../types/types.d'
 import { faStar as faEmptyStar } from '@fortawesome/free-regular-svg-icons'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const MovieCard = ({ Title, Year, imdbID, Type, Poster }: ApiResData.ISearchMovieData) => {
+const MovieCard = ({ title, year, imdbID, type, poster }: SearchModule.ISearchMovieList): JSX.Element => {
   return (
     <article className={styles.cardContainer}>
-      <img className={styles.poster} src={Poster} alt={`${Title}_이미지`} />
+      <img className={styles.poster} src={poster} alt={`${title}_이미지`} />
       <div className={styles.contentContainer}>
         <span className={styles.movieTitle}>
-          <strong>{Title}</strong>
+          <strong>{title}</strong>
         </span>
         <FontAwesomeIcon className={styles.bookMarkIcon} icon={faEmptyStar} />
-        <span>{Year}</span>
+        <span>{year}</span>
       </div>
     </article>
   )
