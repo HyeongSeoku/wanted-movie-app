@@ -15,4 +15,19 @@ export namespace ApiResData {
     Type: string
     Poster: string
   }
+
+  interface IAdditionalData {
+    totalResults: number
+    lastPageNumber: number
+  }
+}
+
+export namespace SearchModule {
+  interface ISearchMovieList {
+    title: string
+    year: number[]
+    imdbID: string
+    type: string
+    poster: string
+  }
 }
