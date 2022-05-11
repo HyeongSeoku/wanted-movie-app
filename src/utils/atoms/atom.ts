@@ -1,5 +1,5 @@
 import { atom } from 'recoil'
-import { ApiResData } from '../../types/types'
+import { ApiResData } from '../../types/types.d'
 
 export const themeMode = atom<string>({
   key: 'themeMode',

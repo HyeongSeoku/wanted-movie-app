@@ -3,9 +3,9 @@ import cx from 'classnames'
 import { Route, Routes } from 'react-router-dom'
 import Search from './Search'
 import BookMark from './BookMark'
-import NavBar from '../components/NavBar'
+import NavBar from '../components/navBar'
 
-function App() {
+const App = () => {
   return (
     <div className={styles.app}>
       <div className={styles.container}>

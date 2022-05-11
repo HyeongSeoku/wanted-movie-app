@@ -1,11 +1,11 @@
 import styles from './Search.module.scss'
 import cx from 'classnames'
-import SearchInput from '../../components/SearchInput'
+import SearchInput from '../../components/searchInput'
 import { useRecoilValue } from 'recoil'
 import { searchMovieData } from '../../utils/atoms/atom'
-import MovieCard from '../../components/MovieCard'
+import MovieCard from '../../components/movieCard'
 
-function Search() {
+const Search = () => {
   const searchMovieList = useRecoilValue(searchMovieData)
 
   return (

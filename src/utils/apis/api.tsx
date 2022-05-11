@@ -7,6 +7,6 @@ const api = axios.create({
 })
 
 export const moviesApi = {
-  searchMovie: async (word: string, page: number) =>
+  searchMovie: (word: string, page: number) =>
     api.get(`?apikey=${process.env.REACT_APP_API_KEY}&s=${word}&page=${page}`),
 }

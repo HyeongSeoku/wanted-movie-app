@@ -1,6 +1,6 @@
 import { faSearch, faBookmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { componentsData } from '../../types/types'
+import { componentsData } from '../../types/types.d'
 
 export const NAV_DATA: componentsData.INavProps[] = [
   { id: 'search_nav', title: '검색', icon: <FontAwesomeIcon icon={faSearch} />, path: '/' },
