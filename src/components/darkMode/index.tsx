@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './DarkMode.module.scss'
+import styles from './darkMode.module.scss'
 import { useSetRecoilState } from 'recoil'
 import { themeMode } from '../../utils/atoms/atom'
 

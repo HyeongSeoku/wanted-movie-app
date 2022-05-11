@@ -1,4 +1,4 @@
-import styles from './MovieCard.module.scss'
+import styles from './movieCard.module.scss'
 import { ApiResData } from '../../types/types.d'
 import { faStar as faEmptyStar } from '@fortawesome/free-regular-svg-icons'
 import { faStar } from '@fortawesome/free-solid-svg-icons'

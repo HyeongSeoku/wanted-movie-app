@@ -1,0 +1,46 @@
+@use '../../styles/constants/colors';
+
+.cardContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 15rem;
+  padding: 0 1rem;
+  cursor: pointer;
+  background-color: colors.$MOVIECARDBGCOLOR;
+  border-radius: 5%;
+
+  &:hover {
+    background-color: colors.$GRAYA;
+  }
+
+  + .cardContainer {
+    margin-top: 10px;
+  }
+}
+
+.poster {
+  max-width: 33%;
+  height: 80%;
+  border-radius: 8%;
+}
+
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin: 0 15px;
+}
+
+.movieTitle {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.bookMarkIcon {
+  color: colors.$YELLOW;
+}
