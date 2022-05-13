@@ -41,15 +41,18 @@ const SearchInput = () => {
         const lastPage = Math.ceil(totalResultCnt / DATA_COUNT)
         const tempList: SearchModule.ISearchMovieList[] = []
 
-        res.data.Search.map((i: ApiResData.ISearchMovieData) =>
+        res.data.Search.map((i: ApiResData.ISearchMovieData) => {
+          let tmpYear = i.Year.split('–').map((item) => Number(item))
+          tmpYear = tmpYear.filter((yearI) => yearI !== 0)
+
           tempList.push({
             title: i.Title,
-            year: i.Year.split('–').map((item: string) => Number(item)),
+            year: tmpYear,
             imdbID: i.imdbID,
             type: i.Type,
             poster: i.Poster,
           })
-        )
+        })
         // 중복제거
         const newData = _.uniqBy(tempList, 'imdbID')
 
