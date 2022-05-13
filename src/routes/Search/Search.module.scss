@@ -1,5 +1,7 @@
 .searchSection {
   //   overflow: scroll;
+  display: flex;
+  flex-direction: column;
 }
 
 .searchMain {
