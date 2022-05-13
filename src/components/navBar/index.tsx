@@ -19,7 +19,7 @@ const NavBar = (): JSX.Element => {
 
   return (
     <footer className={styles.footer}>
-      <nav>
+      <nav className={styles.navContainer}>
         <ul className={styles.navList}>
           {NAV_DATA.map((i) => (
             <li key={i.id} className={cx(styles.navItem, { [styles.clicked]: clickedtNav === i.id })}>
