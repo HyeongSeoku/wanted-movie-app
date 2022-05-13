@@ -1,5 +1,5 @@
 import { atom } from 'recoil'
-import { ApiResData, SearchModule } from '../../types/types.d'
+import { ApiResData, ModalModule, SearchModule } from '../../types/types.d'
 
 export const themeMode = atom<string>({
   key: '#themeMode',
@@ -29,4 +29,14 @@ export const searchPageNumber = atom<number>({
 export const apiAdditionalData = atom<ApiResData.IAdditionalData>({
   key: '#apiAdditionalData',
   default: { totalResults: 0, lastPageNumber: 0 },
+})
+
+export const modalOpen = atom<boolean>({
+  key: '#modalOpen',
+  default: false,
+})
+
+export const modalCurrnetData = atom<ModalModule.IModalData>({
+  key: '#modalCurrnetData',
+  default: { title: '', year: [], imdbID: '', type: '', poster: '' },
 })
