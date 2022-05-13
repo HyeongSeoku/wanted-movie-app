@@ -31,3 +31,13 @@ export namespace SearchModule {
     poster: string
   }
 }
+
+export namespace ModalModule {
+  interface IModalData {
+    title: string
+    year: number[]
+    imdbID: string
+    type: string
+    poster: string
+  }
+}
