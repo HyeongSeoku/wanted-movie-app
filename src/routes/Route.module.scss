@@ -1,6 +1,10 @@
 @use '../styles/constants/colors';
 @use '../styles/mixins/responsive';
 
+body {
+  overflow: hidden;
+}
+
 .app {
   display: flex;
   align-items: center;
@@ -15,6 +19,7 @@
   max-width: 700px;
   height: 100%;
   padding: 1rem;
+  overflow: hidden;
   color: colors.$WHITE;
   background: linear-gradient(to left top, colors.$BGCOLOR, colors.$BGGRADIENTCOLOR);
   border-radius: 1.5rem;
