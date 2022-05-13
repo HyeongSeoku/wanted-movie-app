@@ -1,11 +1,8 @@
 @use '../../styles/constants/colors';
 
 .cardContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   width: 100%;
-  height: 15rem;
+  height: 13rem;
   padding: 0 1rem;
   cursor: pointer;
   background-color: colors.$MOVIECARDBGCOLOR;
@@ -18,6 +15,14 @@
   + .cardContainer {
     margin-top: 10px;
   }
+}
+
+.cardContents {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .poster {
@@ -42,5 +47,9 @@
 }
 
 .bookMarkIcon {
-  color: colors.$YELLOW;
+  color: colors.$WHITE;
+}
+
+.yearContainer {
+  margin-top: 10px;
 }
