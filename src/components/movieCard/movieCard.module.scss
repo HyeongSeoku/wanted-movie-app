@@ -44,6 +44,10 @@
 .movieTitle {
   font-size: 2rem;
   text-align: center;
+
+  strong {
+    flex-wrap: wrap;
+  }
 }
 
 .bookMarkIcon {

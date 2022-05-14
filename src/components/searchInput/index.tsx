@@ -4,17 +4,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import React, { useEffect } from 'react'
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
-import { apiAdditionalData, currentSearchWord, searchMovieData, searchPageNumber } from '../../utils/atoms/atom'
+import {
+  apiAdditionalData,
+  recentSearchWord,
+  loadingState,
+  searchMovieData,
+  searchPageNumber,
+} from '../../utils/atoms/atom'
 import { moviesApi } from '../../utils/apis/api'
 import { DATA_COUNT, FIRST_PAGE } from '../../utils/constants/standard'
-import { ApiResData, SearchModule } from '../../types/types.d'
+import { ApiResData, SearchInputModule, SearchModule } from '../../types/types.d'
+import SearchMethod from '../../routes/Search/searchMethod'
 
 // TODO : search validation 추가
 
-const SearchInput = () => {
-  const [searchWord, setSearchWord] = useRecoilState(currentSearchWord)
+const SearchInput = ({ searchWord, setSearchWord }: SearchInputModule.ISearchInput) => {
+  const [recentWord, setRecentWord] = useRecoilState(recentSearchWord)
   const [pageNumber, setPageNumber] = useRecoilState(searchPageNumber)
   const [additionalData, setAdditionalData] = useRecoilState(apiAdditionalData)
+  const [isLoading, setIsLoading] = useRecoilState(loadingState)
 
   const setSearchList = useSetRecoilState(searchMovieData)
 
@@ -23,11 +31,12 @@ const SearchInput = () => {
 
   useEffect(() => {
     if (pageNumber === FIRST_PAGE) {
-      callApi(searchWord, pageNumber)
+      callApi(searchWord.trim(), pageNumber)
     }
   }, [pageNumber])
 
   function callApi(word: string, page: number) {
+    setIsLoading(true)
     moviesApi.searchMovielist(word, page).then((res) => {
       const success = res.data.Response.toLowerCase()
       /*
@@ -51,15 +60,22 @@ const SearchInput = () => {
             imdbID: i.imdbID,
             type: i.Type,
             poster: i.Poster,
+            bookmarked: SearchMethod.existIdBookMarkList(i.imdbID),
           })
         })
         // 중복제거
         const newData = _.uniqBy(tempList, 'imdbID')
 
-        setSearchList(newData)
-        setAdditionalData({ totalResults: totalResultCnt, lastPageNumber: lastPage })
+        setTimeout(() => {
+          setIsLoading(false)
+          setSearchList(newData)
+          setAdditionalData({ totalResults: totalResultCnt, lastPageNumber: lastPage })
+        }, 1000)
       } else {
         resetSeachList()
+        console.log(res.data)
+
+        setIsLoading(false)
       }
     })
   }
@@ -74,6 +90,8 @@ const SearchInput = () => {
 
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setRecentWord(searchWord)
+
     // 검색시 항상 첫번째 페이지 결과를 받아 와야하므로
     setPageNumber(FIRST_PAGE)
   }

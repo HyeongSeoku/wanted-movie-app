@@ -8,3 +8,5 @@ export const NAV_DATA: componentsData.INavProps[] = [
 ]
 
 export const MASSAGE = {}
+
+export const BOOKMARKLIST = 'bookMarkList'

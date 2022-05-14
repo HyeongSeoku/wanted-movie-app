@@ -11,6 +11,7 @@
   justify-content: center;
   width: 100%;
   height: 100%;
+  overflow: hidden;
   visibility: hidden;
   background-color: colors.$MODALBGCOLOR;
   animation: fadeOut 0.3s ease-in;
@@ -20,18 +21,25 @@
   visibility: visible;
   transition: all 0.2s ease-in;
   animation: fadeIn 0.2s ease-in;
+
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
 }
 
 .modalContent {
   z-index: 10;
   width: 400px;
   height: 70%;
+  overflow: scroll;
   background-color: colors.$MODALCONTENTSBG;
   border-radius: 8px;
   transition: all 0.2s ease-out;
 }
 
 .modalHeader {
+  position: sticky;
+  top: 0;
   display: flex;
   flex-direction: column;
   padding: 5px 10px;
@@ -55,6 +63,11 @@
   background-color: colors.$MODALCLOSEBTNBG;
   border-radius: 50%;
 
+  .closeBtnText {
+    display: none;
+    width: 100%;
+  }
+
   &:hover {
     .closeBtnText {
       display: inline-block;
@@ -62,9 +75,35 @@
   }
 }
 
-.closeBtnText {
-  display: none;
-  width: 100%;
+.contentFlex {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+}
+
+.posterContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.posterImg {
+  height: 16rem;
+  border-radius: 8px;
+}
+
+.title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.7rem;
+  font-weight: bold;
+}
+
+.contentMain {
+  margin: 10px;
 }
 
 @keyframes fadeIn {

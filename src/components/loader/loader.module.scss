@@ -1,0 +1,17 @@
+@use 'src/styles/constants/_colors.scss';
+
+.loaderContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: colors.$BLACK;
+  background-color: #0000004d;
+}
+
+.loaderText {
+  font-size: 20rem;
+  font-weight: bold;
+}

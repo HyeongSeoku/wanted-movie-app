@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as _ from 'lodash'
 import styles from './Search.module.scss'
 import cx from 'classnames'
 import SearchInput from '../../components/searchInput'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import {
-  currentSearchWord,
+  apiAdditionalData,
+  recentSearchWord,
+  loadingState,
   modalCurrnetData,
   modalOpen,
   searchMovieData,
@@ -17,32 +19,48 @@ import { FIRST_PAGE } from '../../utils/constants/standard'
 import { useInView } from 'react-intersection-observer'
 import { ApiResData, SearchModule } from '../../types/types.d'
 import Modal from '../../components/modal'
+import Loader from '../../components/loader'
+import { BOOKMARKLIST } from '../../utils/constants/componentsData'
+import SearchMethod from './searchMethod'
 
-// searchMovieList.length === 0 이면 검색결과가 없습니다 노출
 const Search = (): JSX.Element => {
+  const [localStorageData] = useState<string | null>(localStorage.getItem(BOOKMARKLIST))
+  const [nowSearchValue, setNowSearchValue] = useState<string>('')
   const [searchMovieList, setSearchMovieList] = useRecoilState(searchMovieData)
-  const currentWord = useRecoilValue(currentSearchWord)
+  const [additionalData, setAdditionalData] = useRecoilState(apiAdditionalData)
+
+  const recentWord = useRecoilValue(recentSearchWord)
+  const modalData = useRecoilValue(modalCurrnetData)
   const [pageNumber, setPageNumber] = useRecoilState(searchPageNumber)
   const [isModalOpen, setIsModalOpen] = useRecoilState(modalOpen)
-  const modalData = useRecoilValue(modalCurrnetData)
+  const [isLoading, setIsLoading] = useRecoilState(loadingState)
+
+  const resetSeachList = useResetRecoilState(searchMovieData)
+  const resetPageNumber = useResetRecoilState(searchPageNumber)
+  const resetAdditionalData = useResetRecoilState(apiAdditionalData)
 
   const [ref, inView] = useInView()
 
   // useEffect 페이지 증가 감지 => api  실행
   useEffect(() => {
-    if (pageNumber !== FIRST_PAGE) {
-      callMoreApiData(pageNumber)
+    if (additionalData.lastPageNumber > 1) {
+      if (pageNumber !== FIRST_PAGE && pageNumber !== 0) callMoreApiData(pageNumber)
     }
   }, [pageNumber])
 
   useEffect(() => {
-    if (inView) setPageNumber((prev) => prev + 1)
+    if (inView) {
+      if (pageNumber < additionalData.lastPageNumber && nowSearchValue.trim() === recentWord.trim())
+        setPageNumber((prev) => prev + 1)
+    } else if (nowSearchValue.trim() !== recentWord.trim()) {
+      alert('검색어 변경이 감지되었습니다.')
+      resetAllData()
+    }
   }, [inView])
 
-  // setPageNumber((prev) => prev + 1)
-
   function callMoreApiData(page: number) {
-    moviesApi.searchMovielist(currentWord, page).then((res) => {
+    setIsLoading(true)
+    moviesApi.searchMovielist(recentWord, page).then((res) => {
       const dataList = res.data.Search
 
       let tmpList: SearchModule.ISearchMovieList[] = []
@@ -58,14 +76,23 @@ const Search = (): JSX.Element => {
             imdbID: i.imdbID,
             type: i.Type,
             poster: i.Poster,
+            bookmarked: SearchMethod.existIdBookMarkList(i.imdbID),
           })
         })
 
         tmpList = searchMovieList.concat(tmpList)
         tmpList = _.uniqBy(tmpList, 'imdbID')
+
+        setIsLoading(false)
         setSearchMovieList(tmpList)
       }
     })
+  }
+
+  function resetAllData() {
+    resetSeachList()
+    resetPageNumber()
+    resetAdditionalData()
   }
 
   return (
@@ -76,9 +103,11 @@ const Search = (): JSX.Element => {
         imdbID={modalData.imdbID}
         type={modalData.type}
         poster={modalData.poster}
+        bookmarked={modalData.bookmarked}
       />
+      {isLoading && <Loader />}
       <main className={styles.searchMain}>
-        <SearchInput />
+        <SearchInput searchWord={nowSearchValue} setSearchWord={setNowSearchValue} />
         <section className={styles.movieSection}>
           {searchMovieList.length !== 0 ? (
             searchMovieList.map((movie, idx) => (
@@ -91,6 +120,7 @@ const Search = (): JSX.Element => {
                       imdbID={movie.imdbID}
                       type={movie.type}
                       poster={movie.poster}
+                      bookmarked={movie.bookmarked}
                     />
                   </div>
                 ) : (
@@ -100,6 +130,7 @@ const Search = (): JSX.Element => {
                     imdbID={movie.imdbID}
                     type={movie.type}
                     poster={movie.poster}
+                    bookmarked={movie.bookmarked}
                   />
                 )}
               </React.Fragment>
