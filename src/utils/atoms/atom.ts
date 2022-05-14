@@ -1,5 +1,5 @@
 import { atom } from 'recoil'
-import { ApiResData, ModalModule, SearchModule } from '../../types/types.d'
+import { ApiResData, BookMarkModule, ModalModule, SearchModule } from '../../types/types.d'
 
 export const themeMode = atom<string>({
   key: '#themeMode',
@@ -11,8 +11,8 @@ export const currentNav = atom<string>({
   default: 'search_nav',
 })
 
-export const currentSearchWord = atom<string>({
-  key: '#currentSearchWord',
+export const recentSearchWord = atom<string>({
+  key: '#recentSearchWord',
   default: '',
 })
 
@@ -38,5 +38,16 @@ export const modalOpen = atom<boolean>({
 
 export const modalCurrnetData = atom<ModalModule.IModalData>({
   key: '#modalCurrnetData',
-  default: { title: '', year: [], imdbID: '', type: '', poster: '' },
+  default: { title: '', year: [], imdbID: '', type: '', poster: '', bookmarked: false },
+})
+
+export const loadingState = atom<boolean>({
+  key: '#loadingState',
+  default: false,
+})
+
+// bookmark
+export const bookMarkList = atom<BookMarkModule.IBookMarkModule[]>({
+  key: '#BookMarkList',
+  default: [],
 })
