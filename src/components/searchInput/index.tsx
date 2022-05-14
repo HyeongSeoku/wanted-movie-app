@@ -16,6 +16,7 @@ import { moviesApi } from '../../utils/apis/api'
 import { DATA_COUNT, FIRST_PAGE } from '../../utils/constants/standard'
 import { ApiResData, SearchInputModule, SearchModule } from '../../types/types.d'
 import SearchMethod from '../../routes/Search/searchMethod'
+import { MESSAGE } from '../../utils/constants/componentsData'
 
 // TODO : search validation 추가
 
@@ -75,6 +76,11 @@ const SearchInput = ({ searchWord, setSearchWord }: SearchInputModule.ISearchInp
           setAdditionalData({ totalResults: totalResultCnt, lastPageNumber: lastPage })
         }, 1000)
       } else {
+        if (message === MESSAGE.NOTFOUND) {
+          alert('검색 결과가 없습니다.')
+        } else if (message === MESSAGE.TOOMANY) {
+          alert('검색어가 너무 짧습니다.')
+        }
         resetSeachList()
         console.log(res.data)
 

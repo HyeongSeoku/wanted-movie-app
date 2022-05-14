@@ -7,6 +7,6 @@ export const NAV_DATA: componentsData.INavProps[] = [
   { id: 'bookmark_nav', title: '즐겨찾기', icon: <FontAwesomeIcon icon={faBookmark} />, path: '/bookmark' },
 ]
 
-export const MASSAGE = {}
+export const MESSAGE = { TOOMANY: 'Too many results.', NOTFOUND: 'Movie not found!' }
 
 export const BOOKMARKLIST = 'bookMarkList'
