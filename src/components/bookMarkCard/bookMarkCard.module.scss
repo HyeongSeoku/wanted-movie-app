@@ -17,6 +17,15 @@
   }
 }
 
+.iconContainer {
+  margin-bottom: 30px;
+  margin-left: auto;
+
+  &:hover {
+    color: colors.$RED;
+  }
+}
+
 .bookMarkCardContents {
   display: flex;
   flex-direction: row;
