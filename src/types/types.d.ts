@@ -36,7 +36,7 @@ export namespace SearchModule {
     imdbID: string
     type: string
     poster: string
-    bookmarked: boolean
+    bookMark: boolean
   }
   interface ISearchMovieCard {
     title: string
@@ -44,7 +44,7 @@ export namespace SearchModule {
     imdbID: string
     type: string
     poster: string
-    bookmarked: boolean
+    bookMark: boolean
   }
 }
 
@@ -55,7 +55,7 @@ export namespace ModalModule {
     imdbID: string
     type: string
     poster: string
-    bookmarked: boolean
+    bookMark: boolean
   }
 }
 
@@ -66,7 +66,6 @@ export namespace movieCardModule {
     imdbID: string
     type: string
     poster: string
-    bookmarked: boolean
   }
 }
 

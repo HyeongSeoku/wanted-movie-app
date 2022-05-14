@@ -8,37 +8,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar as faEmptyStar } from '@fortawesome/free-regular-svg-icons'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { BOOKMARKLIST } from '../../utils/constants/componentsData'
-import SearchMethod from '../../routes/Search/searchMethod'
 
 // TODO : esc 눌렀을때 모달 닫히도록 동작
 
-const Modal = ({ title, year, imdbID, type, poster, bookmarked }: ModalModule.IModalData) => {
-  const [movieList, setMovieList] = useRecoilState(searchMovieData)
+const Modal = ({ title, year, imdbID, type, poster, bookMark }: ModalModule.IModalData) => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(modalOpen)
-  const [bookMark, setBookMark] = useState<boolean>(bookmarked)
+  const [searchMovieList, setSearchMovieList] = useRecoilState(searchMovieData)
   const [bookMarkData, setBookMarkData] = useRecoilState<BookMarkModule.IBookMarkModule[]>(bookMarkList)
   const backDropRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    console.log('데이터 바꼈을때 상태', title, bookmarked, bookMark)
-    setBookMark(bookmarked)
-  }, [title, year, imdbID, type, poster, bookmarked])
-
-  useEffect(() => {
-    // 북마크 state가 false이고 로컬스토리지에 존재하지 않으면
-    if (bookMark && !SearchMethod.existIdBookMarkList(imdbID)) {
-      const data = localStorage.getItem(BOOKMARKLIST)
-      const newArr = JSON.parse(data!)
-      newArr.push({ title, year, imdbID, type, poster })
-      localStorage.setItem(BOOKMARKLIST, JSON.stringify(newArr))
-      setBookMarkData(newArr)
-      setMovieList(movieList.map((movie) => (movie.imdbID === imdbID ? { ...movie, bookmarked: true } : movie)))
-    }
-  }, [bookMark])
-
-  useEffect(() => {
-    console.log(movieList)
-  }, [movieList])
+    localStorage.setItem(BOOKMARKLIST, JSON.stringify(bookMarkData))
+  }, [bookMarkData])
 
   const handleModalData = (e: React.MouseEvent<HTMLElement>) => {
     if (backDropRef.current === e.target) setIsModalOpen(false)
@@ -50,17 +31,16 @@ const Modal = ({ title, year, imdbID, type, poster, bookmarked }: ModalModule.IM
 
   const deleteBookMark = () => {
     if (window.confirm('즐겨찾기에서 제거 할까요')) {
-      // 로컬 스토리지 제거
-      const newArr = bookMarkData.filter((item) => item.imdbID !== imdbID)
-      localStorage.setItem(BOOKMARKLIST, JSON.stringify(newArr))
-      setBookMarkData(newArr)
-      setBookMark(false)
+      setBookMarkData((prev) => prev.filter((movie) => movie.imdbID !== imdbID))
+      setSearchMovieList((prev) => prev.map((i) => (i.imdbID === imdbID ? { ...i, bookMark: false } : i)))
+
       alert('제거 되었습니다.')
     }
   }
 
   const addBookMark = () => {
-    setBookMark(true)
+    setBookMarkData((prev) => [...prev, { title, year, imdbID, type, poster }])
+    setSearchMovieList((prev) => prev.map((i) => (i.imdbID === imdbID ? { ...i, bookMark: true } : i)))
   }
 
   const handleBookMark = () => {
@@ -84,7 +64,11 @@ const Modal = ({ title, year, imdbID, type, poster, bookmarked }: ModalModule.IM
           <div className={styles.posterContainer}>
             <img className={styles.posterImg} src={poster} alt={`${title} 이미지`} />
           </div>
-          <FontAwesomeIcon icon={bookmarked ? faStar : faEmptyStar} onClick={handleBookMark} />
+          <FontAwesomeIcon
+            icon={bookMark ? faStar : faEmptyStar}
+            className={cx({ [styles.isBookMarked]: bookMark })}
+            onClick={handleBookMark}
+          />
           <div className={styles.title}>
             <span>{title}</span>
           </div>

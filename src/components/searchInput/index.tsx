@@ -3,13 +3,14 @@ import styles from './searchInput.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import React, { useEffect } from 'react'
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import {
   apiAdditionalData,
   recentSearchWord,
   loadingState,
   searchMovieData,
   searchPageNumber,
+  bookMarkList,
 } from '../../utils/atoms/atom'
 import { moviesApi } from '../../utils/apis/api'
 import { DATA_COUNT, FIRST_PAGE } from '../../utils/constants/standard'
@@ -25,6 +26,8 @@ const SearchInput = ({ searchWord, setSearchWord }: SearchInputModule.ISearchInp
   const [isLoading, setIsLoading] = useRecoilState(loadingState)
 
   const setSearchList = useSetRecoilState(searchMovieData)
+
+  const bookMarkData = useRecoilValue(bookMarkList)
 
   const resetSeachList = useResetRecoilState(searchMovieData)
   const resetPageNumber = useResetRecoilState(searchPageNumber)
@@ -60,7 +63,7 @@ const SearchInput = ({ searchWord, setSearchWord }: SearchInputModule.ISearchInp
             imdbID: i.imdbID,
             type: i.Type,
             poster: i.Poster,
-            bookmarked: SearchMethod.existIdBookMarkList(i.imdbID),
+            bookMark: SearchMethod.existIdBookMarkList(bookMarkData, i.imdbID),
           })
         })
         // 중복제거

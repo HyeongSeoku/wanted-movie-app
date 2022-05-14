@@ -38,7 +38,7 @@ export const modalOpen = atom<boolean>({
 
 export const modalCurrnetData = atom<ModalModule.IModalData>({
   key: '#modalCurrnetData',
-  default: { title: '', year: [], imdbID: '', type: '', poster: '', bookmarked: false },
+  default: { title: '', year: [], imdbID: '', type: '', poster: '', bookMark: false },
 })
 
 export const loadingState = atom<boolean>({

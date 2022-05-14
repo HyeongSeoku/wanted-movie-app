@@ -12,6 +12,7 @@ import {
   modalOpen,
   searchMovieData,
   searchPageNumber,
+  bookMarkList,
 } from '../../utils/atoms/atom'
 import MovieCard from '../../components/movieCard'
 import { moviesApi } from '../../utils/apis/api'
@@ -31,6 +32,8 @@ const Search = (): JSX.Element => {
 
   const recentWord = useRecoilValue(recentSearchWord)
   const modalData = useRecoilValue(modalCurrnetData)
+  const bookMarkData = useRecoilValue(bookMarkList)
+
   const [pageNumber, setPageNumber] = useRecoilState(searchPageNumber)
   const [isModalOpen, setIsModalOpen] = useRecoilState(modalOpen)
   const [isLoading, setIsLoading] = useRecoilState(loadingState)
@@ -76,7 +79,7 @@ const Search = (): JSX.Element => {
             imdbID: i.imdbID,
             type: i.Type,
             poster: i.Poster,
-            bookmarked: SearchMethod.existIdBookMarkList(i.imdbID),
+            bookMark: SearchMethod.existIdBookMarkList(bookMarkData, i.imdbID),
           })
         })
 
@@ -103,7 +106,7 @@ const Search = (): JSX.Element => {
         imdbID={modalData.imdbID}
         type={modalData.type}
         poster={modalData.poster}
-        bookmarked={modalData.bookmarked}
+        bookMark={modalData.bookMark}
       />
       {isLoading && <Loader />}
       <main className={styles.searchMain}>
@@ -120,7 +123,7 @@ const Search = (): JSX.Element => {
                       imdbID={movie.imdbID}
                       type={movie.type}
                       poster={movie.poster}
-                      bookmarked={movie.bookmarked}
+                      bookMark={movie.bookMark}
                     />
                   </div>
                 ) : (
@@ -130,7 +133,7 @@ const Search = (): JSX.Element => {
                     imdbID={movie.imdbID}
                     type={movie.type}
                     poster={movie.poster}
-                    bookmarked={movie.bookmarked}
+                    bookMark={movie.bookMark}
                   />
                 )}
               </React.Fragment>

@@ -48,6 +48,10 @@
   border-top-right-radius: 8px;
 }
 
+.isBookMarked {
+  color: colors.$YELLOW;
+}
+
 .closeBtn {
   box-sizing: border-box;
   display: flex;

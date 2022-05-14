@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from './movieCard.module.scss'
 import { BookMarkModule, SearchModule } from '../../types/types.d'
+import cx from 'classnames'
 import { faStar as faEmptyStar } from '@fortawesome/free-regular-svg-icons'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -9,28 +10,35 @@ import { bookMarkList, modalCurrnetData, modalOpen } from '../../utils/atoms/ato
 import { BOOKMARKLIST } from '../../utils/constants/componentsData'
 import SearchMethod from '../../routes/Search/searchMethod'
 
-const MovieCard = ({ title, year, imdbID, type, poster, bookmarked }: SearchModule.ISearchMovieList): JSX.Element => {
+const MovieCard = ({ title, year, imdbID, type, poster, bookMark }: SearchModule.ISearchMovieList): JSX.Element => {
   const [cardData, setCardData] = useState<SearchModule.ISearchMovieCard>({
     title,
     year,
     imdbID,
     type,
     poster,
-    bookmarked,
+    bookMark,
   })
-  const [localStorageData] = useState<string | null>(localStorage.getItem(BOOKMARKLIST))
   const [bookMarkData, setBookMarkData] = useRecoilState(bookMarkList)
+  const [isBookMark, setIsBookMark] = useState<boolean>(SearchMethod.existIdBookMarkList(bookMarkData, imdbID))
 
   const setIsModalOpen = useSetRecoilState(modalOpen)
   const setCurrentModalData = useSetRecoilState(modalCurrnetData)
 
   useEffect(() => {
-    setBookMarkData(JSON.parse(localStorageData!))
-  }, [localStorageData])
+    setCardData({ title, year, imdbID, type, poster, bookMark })
+  }, [title, year, imdbID, type, poster, bookMark])
 
   useEffect(() => {
-    console.log('movieCard', title, bookmarked)
-    setCurrentModalData({ title, year, imdbID, type, poster, bookmarked })
+    setCurrentModalData(cardData)
+  }, [cardData])
+
+  useEffect(() => {
+    setIsBookMark(SearchMethod.existIdBookMarkList(bookMarkData, imdbID))
+  }, [bookMarkData])
+
+  useEffect(() => {
+    setCurrentModalData({ title, year, imdbID, type, poster, bookMark })
   }, [])
 
   const handleClickMovieCard = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -46,7 +54,10 @@ const MovieCard = ({ title, year, imdbID, type, poster, bookmarked }: SearchModu
           <span className={styles.movieTitle}>
             <strong>{title}</strong>
           </span>
-          <FontAwesomeIcon className={styles.bookMarkIcon} icon={bookmarked ? faStar : faEmptyStar} />
+          <FontAwesomeIcon
+            className={cx(styles.bookMarkIcon, { [styles.isBookMarked]: bookMark })}
+            icon={bookMark ? faStar : faEmptyStar}
+          />
           <div className={styles.yearContainer}>
             {year.map((i, idx) => (
               <React.Fragment key={`year_${i}`}>
