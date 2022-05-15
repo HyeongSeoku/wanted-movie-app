@@ -1,5 +1,18 @@
+@use '../../styles/constants/colors';
+
 .bookMarkSection {
   display: flex;
   flex-direction: column;
-  overflow: scroll;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 1.4rem;
 }

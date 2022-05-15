@@ -55,9 +55,6 @@ const Search = (): JSX.Element => {
     if (inView) {
       if (pageNumber < additionalData.lastPageNumber && nowSearchValue.trim() === recentWord.trim())
         setPageNumber((prev) => prev + 1)
-    } else if (nowSearchValue.trim() !== recentWord.trim()) {
-      alert('검색어 변경이 감지되었습니다.')
-      resetAllData()
     }
   }, [inView])
 
