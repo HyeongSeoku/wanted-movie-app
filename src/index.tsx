@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import './styles/index.scss'
 import Routes from './routes'
@@ -7,11 +7,13 @@ import { BrowserRouter } from 'react-router-dom'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
-  <RecoilRoot>
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
-      <Routes />
-    </BrowserRouter>
-  </RecoilRoot>
+  <StrictMode>
+    <RecoilRoot>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <Routes />
+      </BrowserRouter>
+    </RecoilRoot>
+  </StrictMode>
 )
 
 // If you want to start measuring performance in your app, pass a function
