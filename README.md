@@ -166,16 +166,13 @@
 
     가장 바깥의 Router 페이지가 로드시 bookMarkList라는 이름의 localStorage데이터가 있는지 확인하고 없으면 빈 배열로 localStorage에 생성
 
-    이후 App 페이지에서 localStorage데이터가 변경될때마다 recoil로 관리되는 데이터인 bookMarkList를 변경시켜주었습니다
+    이후 App 페이지에서 useEffect를 이용해 localStorage데이터가 변경될때마다 recoil로 관리되는 데이터인 bookMarkList를 변경시켜주었습니다
 
 
 **❗️ 어려웠던 점**
 
     검색 결과에서의 즐겨찾기에 추가됐는지 여부와, 모달에서의 즐겨찾기에 추가됐는지 여부가 
     서로 제대로 추적되지 않아서 굉장히 애를 먹었습니다
-
-
-**⭐️ 자랑할 점**
 
 ---
 
@@ -194,18 +191,20 @@
     조금 헤맸지만, 어려운 사용 방식이 아니라 금방 이해할 수 있었습니다
 
 
-**⭐️ 자랑할 점**
-
 ---
 
 ## 선택 구현
-- [ ] 즐겨찾기 목록 순서 조정 (드래그 & 드롭)
+- [x] 즐겨찾기 목록 순서 조정 (드래그 & 드롭)
 
 
 ## 기술 스택
 - React
 - TypeScript
-- 
+- recoil
+- react-intersection-observer
+- react-beautiful-dnd
+- fontawesome
+
 
 ## 보완 사항
 - 세부 디테일 디자인 수정
