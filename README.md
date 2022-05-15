@@ -164,7 +164,9 @@
 ![bookMark_mini_demo](https://user-images.githubusercontent.com/48541850/168460892-0a674651-5bf0-42f4-94a0-2b3fc09f7aad.gif)
 **💁 구현 설명**
 
-    가장 바깥의 Router 페이지에서 리코일로 관리되는 데이터인 bookMarkList
+    가장 바깥의 Router 페이지가 로드시 bookMarkList라는 이름의 localStorage데이터가 있는지 확인하고 없으면 빈 배열로 localStorage에 생성
+
+    이후 App 페이지에서 localStorage데이터가 변경될때마다 recoil로 관리되는 데이터인 bookMarkList를 변경시켜주었습니다
 
 
 **❗️ 어려웠던 점**

@@ -13,7 +13,6 @@ import { BOOKMARKLIST } from '../utils/constants/componentsData'
 const App = () => {
   const [localStorageData] = useState<string | null>(localStorage.getItem(BOOKMARKLIST))
   const setBookMarkData = useSetRecoilState(bookMarkList)
-  const test = useRecoilValue(bookMarkList)
 
   useEffect(() => {
     if (localStorageData === null) localStorage.setItem(BOOKMARKLIST, JSON.stringify([]))
@@ -24,10 +23,6 @@ const App = () => {
     if (localStorageData === null) localStorage.setItem(BOOKMARKLIST, JSON.stringify([]))
     else setBookMarkData(JSON.parse(localStorageData))
   }, [localStorageData])
-
-  useEffect(() => {
-    console.log('arr', test)
-  }, [test])
 
   return (
     <div className={styles.app}>
