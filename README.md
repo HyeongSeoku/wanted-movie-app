@@ -4,7 +4,7 @@
 영화를 검색하고 즐겨찾기 등록/수정이 가능한 서비스입니다.
 ---
 
-# [🚀 데모](https://hyeongseoku.github.io/wanted-movie-app/)
+# [🚀 데모](https://hyeongseoku.github.io/wanted-movie-app/) (현재 제대로 동작하지 않음)
 
 
 ### 파일 구조
