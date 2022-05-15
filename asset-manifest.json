@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/wanted-movie-app/static/css/main.e2d2f32b.css",
-    "main.js": "/wanted-movie-app/static/js/main.d527c087.js",
-    "static/media/notfound.png": "/wanted-movie-app/static/media/notfound.2a839dd5196ac7122d78.png",
-    "index.html": "/wanted-movie-app/index.html",
-    "main.e2d2f32b.css.map": "/wanted-movie-app/static/css/main.e2d2f32b.css.map",
-    "main.d527c087.js.map": "/wanted-movie-app/static/js/main.d527c087.js.map"
+    "main.css": "https://hyeongseoku.github.io/wanted-movie-app/static/css/main.e2d2f32b.css",
+    "main.js": "https://hyeongseoku.github.io/wanted-movie-app/static/js/main.ec15f2a6.js",
+    "static/media/notfound.png": "https://hyeongseoku.github.io/wanted-movie-app/static/media/notfound.2a839dd5196ac7122d78.png",
+    "index.html": "https://hyeongseoku.github.io/wanted-movie-app/index.html",
+    "main.e2d2f32b.css.map": "https://hyeongseoku.github.io/wanted-movie-app/static/css/main.e2d2f32b.css.map",
+    "main.ec15f2a6.js.map": "https://hyeongseoku.github.io/wanted-movie-app/static/js/main.ec15f2a6.js.map"
   },
   "entrypoints": [
     "static/css/main.e2d2f32b.css",
-    "static/js/main.d527c087.js"
+    "static/js/main.ec15f2a6.js"
   ]
 }
