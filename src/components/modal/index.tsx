@@ -64,23 +64,29 @@ const Modal = ({ title, year, imdbID, type, poster, bookMark }: ModalModule.IMod
           <div className={styles.posterContainer}>
             <img className={styles.posterImg} src={poster} alt={`${title} 이미지`} />
           </div>
-          <FontAwesomeIcon
-            icon={bookMark ? faStar : faEmptyStar}
-            className={cx({ [styles.isBookMarked]: bookMark })}
-            onClick={handleBookMark}
-          />
+          <div className={styles.iconContainer}>
+            <span className={styles.type}>{type}</span>
+            <FontAwesomeIcon
+              icon={bookMark ? faStar : faEmptyStar}
+              className={cx(styles.icon, { [styles.isBookMarked]: bookMark })}
+              onClick={handleBookMark}
+            />
+          </div>
+
           <div className={styles.title}>
             <span>{title}</span>
           </div>
-          <div>
-            <span>{year}</span>
+          <div className={styles.yearContainer}>
+            {year.map((i, idx) => (
+              <React.Fragment key={`year_${i}`}>
+                <span className={styles.year}>{i}</span>
+                <span>{year.length - 1 !== idx ? '-' : ''}</span>
+              </React.Fragment>
+            ))}
           </div>
-          <div>
-            <span>{imdbID}</span>
-          </div>
-          <div>
-            <span>{type}</span>
-          </div>
+          <div className={styles.imdbId}>{imdbID}</div>
+
+          <div />
         </main>
       </section>
     </section>

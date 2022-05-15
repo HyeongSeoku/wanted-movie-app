@@ -48,8 +48,32 @@
   border-top-right-radius: 8px;
 }
 
+.iconContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.icon {
+  margin-left: auto;
+}
+
+.type {
+  padding: 1px 2px;
+  background-color: colors.$ORANGE;
+  border-radius: 3px;
+}
+
 .isBookMarked {
   color: colors.$YELLOW;
+}
+
+.imdbId {
+  padding: 1px 2px;
+  margin-right: 5px;
+  margin-left: auto;
+  font-size: 15px;
+  background-color: colors.$GREEN;
+  border-radius: 2px;
 }
 
 .closeBtn {
@@ -106,7 +130,21 @@
   font-weight: bold;
 }
 
+.yearContainer {
+  margin-top: 10px;
+  margin-right: 20px;
+  margin-left: auto;
+  font-size: 15px;
+}
+
+.year {
+  display: inline-block;
+  margin-left: auto;
+}
+
 .contentMain {
+  display: flex;
+  flex-direction: column;
   margin: 10px;
 }
 

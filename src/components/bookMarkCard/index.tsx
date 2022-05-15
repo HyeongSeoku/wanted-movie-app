@@ -7,7 +7,7 @@ import { useRecoilState } from 'recoil'
 import { bookMarkList, searchMovieData } from '../../utils/atoms/atom'
 import { BOOKMARKLIST } from '../../utils/constants/componentsData'
 
-const BookMarkCard = ({ title, year, imdbID, type, poster }: BookMarkModule.IBookMarkModule) => {
+const BookMarkCard = ({ title, year, imdbID, type, poster }: BookMarkModule.IBookMarkCardData) => {
   const [bookMarkData, setBookMarkData] = useRecoilState<BookMarkModule.IBookMarkModule[]>(bookMarkList)
   const [searchMovieList, setSearchMovieList] = useRecoilState(searchMovieData)
 
@@ -22,6 +22,7 @@ const BookMarkCard = ({ title, year, imdbID, type, poster }: BookMarkModule.IBoo
       alert('제거 되었습니다.')
     }
   }
+
   return (
     <article className={styles.bookMarkCardContainer}>
       <div role='button' tabIndex={0} className={styles.bookMarkCardContents}>
