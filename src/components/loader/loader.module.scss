@@ -15,3 +15,50 @@
   font-size: 20rem;
   font-weight: bold;
 }
+
+html {
+  background-color: colors.$WHITE;
+}
+
+.spinner {
+  position: absolute;
+  top: calc(50% - #{30px / 2});
+  left: calc(50% - #{30px / 2});
+  width: 30px;
+  height: 30px;
+  animation: spinner 0.75s linear infinite;
+
+  span {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+
+  .spinnerInner1 {
+    background: linear-gradient(to right, rgba(salmon, 0) 0%, rgba(salmon, 0) 50%, salmon 51%);
+  }
+
+  .spinnerInner2 {
+    background: linear-gradient(to top, rgba(colors.$WHITE, 0) 0%, colors.$WHITE 100%);
+  }
+
+  .spinnerInner3 {
+    $offset: 30px * 0.1;
+    top: $offset;
+    left: $offset;
+    width: 30px - ($offset * 2);
+    height: 30px - ($offset * 2);
+    background: transparent;
+  }
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
