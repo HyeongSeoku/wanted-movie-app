@@ -1,45 +1,144 @@
 # wanted-movie-app
 원티드 프리온보딩 2주차 개인과제입니다.
 
+영화를 검색하고 즐겨찾기 등록/수정이 가능한 서비스입니다.
 ---
 
-## 현재 개발 진행 상태
-![Kapture 2022-05-10 at 19 27 29](https://user-images.githubusercontent.com/48541850/167608742-9834697d-e1a8-4f76-a06a-45499d7f55fd.gif)
+## 데모 영상
 
 
+### 파일 구조
+```
+.
+├── App.tsx
+├── assets
+├── components
+│   ├── bookMarkCard
+│   │   ├── bookMarkCard.module.scss
+│   │   └── index.tsx
+│   ├── bookMarkListContainer
+│   │   ├── bookMarkListContainer.module.scss
+│   │   └── index.tsx
+│   ├── darkMode
+│   │   ├── darkMode.module.scss
+│   │   └── index.tsx
+│   ├── loader
+│   │   ├── index.tsx
+│   │   └── loader.module.scss
+│   ├── modal
+│   │   ├── index.tsx
+│   │   └── modal.module.scss
+│   ├── movieCard
+│   │   ├── index.tsx
+│   │   └── movieCard.module.scss
+│   ├── navBar
+│   │   ├── index.tsx
+│   │   └── navBar.module.scss
+│   └── searchInput
+│       ├── index.tsx
+│       └── searchInput.module.scss
+├── images
+│   └── notfound.png
+├── index.tsx
+├── logo.svg
+├── react-app-env.d.ts
+├── reportWebVitals.ts
+├── routes
+│   ├── BookMark
+│   │   ├── BookMark.module.scss
+│   │   └── index.tsx
+│   ├── NotFound404
+│   │   ├── NotFound404.module.scss
+│   │   └── index.tsx
+│   ├── Route.module.scss
+│   ├── Search
+│   │   ├── Search.module.scss
+│   │   ├── index.tsx
+│   │   └── searchMethod.tsx
+│   └── index.tsx
+├── setupTests.ts
+├── styles
+│   ├── base
+│   │   ├── _fonts.scss
+│   │   ├── _more.scss
+│   │   └── _reset.scss
+│   ├── constants
+│   │   ├── _colors.scss
+│   │   ├── _levels.scss
+│   │   └── _sizes.scss
+│   ├── index.js
+│   ├── index.scss
+│   └── mixins
+│       ├── _animation.scss
+│       ├── _flexbox.scss
+│       ├── _position.scss
+│       ├── _responsive.scss
+│       └── _visual.scss
+├── test.txt
+├── types
+│   └── types.d.ts
+└── utils
+    ├── apis
+    │   └── api.tsx
+    ├── atoms
+    │   └── atom.ts
+    └── constants
+        ├── componentsData.tsx
+        └── standard.tsx
 
-## 개발 요건
-- React v.17 ⬆️
-- 오픈소스 사용 가능 (동작 설명 가능해야함)
-- Recoil 우대
+24 directories, 51 files
 
+```
 
 ## 기본 구현
+- [x] 하단 메뉴
+- [x] 영화 검색
+- [x] 검색 결과 표시
+- [x] Infinite scroll
+- [x] 즐겨찾기 등록/삭제 기능
 
-### 기본 구성 
-- 하단 탭바
-    - 검색 탭
-    - 즐겨찾기 탭
-- 검색 탭
-    - 앱 진입시 검색 탭으로 진입
-    - 상단 검색 입력 검색 버튼, 아래 부분은 검색 결과 화면
-    - 한줄에 하나의 영화 노출하는 리스트 형 목록
-    - 스크롤 중이더라도 검색어 입력 박스는 고정. (sticky || fixed )
-    - 영화 아이템 (영화 포스터 이미지 | 영화 제목,연도 타입으로 구성)
-    - 검색 결과 목록을 최하단으로 스크롤시 API를 이용해서 다음 페이지 불러와서 노출해야함
-    - 검색 결과 없을 경우 검색 결과 없음으로 노출
-    - **영화 클릭시**
-        - 선택 창 뜨며 '즐겨찾기' 또는 '취소' 선택 가능
-        - 즐겨찾기 선택시 해당 영화 정보를 즐겨찾기 탭에서 조회 가능
-        - 즐겨 찾기 된 데이터는 로컬에 저장하여 다음에 접속시 즐겨찾기 조회가 되어야함 (localStorage)
-        - 이미 즐겨찾기한 영화의 경우 즐겨찾기 대신 '즐겨찾기 제거' 노출
-        - 즐겨찾기 된 영화는 검색 목록에서 알아볼 수 있도록 아이콘 혹은 텍스트등을 노출
-- 즐겨찾기 탭
-    - '내 즐겨찾기'라는 Title 노출
-    - 현재까지 즐겨찾기한 영화 목록 노출 (디자인 동일)
-    - 영화를 클릭시 선택 창 뜸. '즐겨찾기 제거' || '취소' 선택 가능
-    - '즐겨찾기 해제'를 누를시 해당 영화는 목록에서 즉시 제거
-    - 즐겨찾기 탭은 별도의 페이징 없이 한번에 모든 데이터 로딩
+
+## 세부 설명
+
+### 검색
+![search_mini_demo](https://user-images.githubusercontent.com/48541850/168460854-b0721d1b-d54b-4091-92e5-094e1e15cbad.gif)
+
+
+---
+
+### 검색 스크롤
+![search_scroll_mini_demo](https://user-images.githubusercontent.com/48541850/168460887-3cf1656b-fb5e-4bbf-84ba-ec195ae9d91d.gif)
+
+---
+### 모달
+![modal_mini_demo](https://user-images.githubusercontent.com/48541850/168460947-63c1ded3-f2bf-4078-815f-9190fc59b967.gif)
+
+
+---
+
+### 즐겨찾기
+
+![bookMark_mini_demo](https://user-images.githubusercontent.com/48541850/168460892-0a674651-5bf0-42f4-94a0-2b3fc09f7aad.gif)
+
+---
+
+### 드래그 앤 드롭
+![dnd_mini_demo](https://user-images.githubusercontent.com/48541850/168460895-ad351372-f8c1-45a7-b5d7-b4f2eaf78cfa.gif)
+
+---
 
 ## 선택 구현
 - 즐겨찾기 목록 순서 조정 (드래그 & 드롭)
+
+
+## 기술 스택
+- React
+- TypeScript
+- 
+
+## 보완 사항
+- 세부 디테일 디자인 수정
+- 디렉토리 구조 수정
+- 중복 타입 선언 제거
+- 검색 로직 및 즐겨찾기 로직 최적화
+- 추가 데이터를 통한 좀 더 다양한 정보 랜더링 (https://imdb-api.com/) [imdbID 활용]
