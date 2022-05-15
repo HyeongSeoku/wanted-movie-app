@@ -78,6 +78,14 @@ export namespace BookMarkModule {
     poster: string
     bookmarked?: boolean
   }
+
+  interface IBookMarkCardData {
+    title: string
+    year: number[]
+    imdbID: string
+    type: string
+    poster: string
+  }
 }
 
 export namespace LocalStorageModule {
