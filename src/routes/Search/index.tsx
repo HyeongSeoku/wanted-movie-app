@@ -66,12 +66,12 @@ const Search = (): JSX.Element => {
 
           // 데이터 처리
           tmpList.push({
-            title: i.Title,
+            title,
             year: tmpYear,
-            imdbID: i.imdbID,
-            type: i.Type,
-            poster: i.Poster,
-            bookMark: SearchMethod.existIdBookMarkList(bookMarkData, i.imdbID),
+            imdbID,
+            type,
+            poster,
+            bookMark: SearchMethod.existIdBookMarkList(bookMarkData, data.imdbID),
           })
         })
 

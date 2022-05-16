@@ -10,8 +10,6 @@ const BookMarkListConatiner = () => {
   const [bookMarkData, setBookMarkData] = useRecoilState(bookMarkList)
 
   const handleDragEnd = (r: DropResult) => {
-    console.log('emform')
-
     const tempBookMark = _.cloneDeep(bookMarkData)
     const bookMarkArrSrc = tempBookMark.splice(r.source.index, 1)[0]
 
