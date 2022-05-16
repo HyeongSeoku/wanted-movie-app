@@ -1,25 +1,32 @@
 import { useRecoilState } from 'recoil'
 import styles from './modal.module.scss'
-import { bookMarkList, modalOpen, searchMovieData } from 'utils/atoms/atom'
+import { bookMarkList, modalOpen } from 'utils/atoms/atom'
 import cx from 'classnames'
-import React, { useEffect, useRef, useState } from 'react'
-import { BookMarkModule, LocalStorageModule, ModalModule } from 'types/types.d'
+import React, { useEffect, useRef } from 'react'
+import { ModalModule, MovieListData } from 'types/types.d'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar as faEmptyStar } from '@fortawesome/free-regular-svg-icons'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { BOOKMARKLIST } from 'utils/constants/componentsData'
+import { setLocalStorage } from 'service/store'
+
+interface IModal {
+  movie: MovieListData.IMovieList
+}
 
 // TODO : esc 눌렀을때 모달 닫히도록 동작
 
-const Modal = ({ title, year, imdbID, type, poster, bookMark }: ModalModule.IModalData) => {
+const Modal = ({ movie }: IModal) => {
+  const { title, year, imdbID, type, poster } = movie
+  const [bookMarkMovieList, setBookMarkMovieList] = useRecoilState(bookMarkList)
   const [isModalOpen, setIsModalOpen] = useRecoilState(modalOpen)
-  const [searchMovieList, setSearchMovieList] = useRecoilState(searchMovieData)
-  const [bookMarkData, setBookMarkData] = useRecoilState<BookMarkModule.IBookMarkModule[]>(bookMarkList)
   const backDropRef = useRef<HTMLElement>(null)
 
-  useEffect(() => {
-    localStorage.setItem(BOOKMARKLIST, JSON.stringify(bookMarkData))
-  }, [bookMarkData])
+  useEffect(() => {}, [bookMarkMovieList])
+
+  const isBookMark = () => {
+    return bookMarkMovieList.find((item: MovieListData.IMovieList) => item.imdbID === imdbID)
+  }
 
   const handleModalData = (e: React.MouseEvent<HTMLElement>) => {
     if (backDropRef.current === e.target) setIsModalOpen(false)
@@ -31,20 +38,21 @@ const Modal = ({ title, year, imdbID, type, poster, bookMark }: ModalModule.IMod
 
   const deleteBookMark = () => {
     if (window.confirm('즐겨찾기에서 제거 할까요')) {
-      setBookMarkData((prev) => prev.filter((movie) => movie.imdbID !== imdbID))
-      setSearchMovieList((prev) => prev.map((i) => (i.imdbID === imdbID ? { ...i, bookMark: false } : i)))
-
+      const newBookMarkList = bookMarkMovieList.filter((data) => data.imdbID !== imdbID)
+      setBookMarkMovieList(newBookMarkList)
+      setLocalStorage(BOOKMARKLIST, newBookMarkList)
       alert('제거 되었습니다.')
     }
   }
 
   const addBookMark = () => {
-    setBookMarkData((prev) => [...prev, { title, year, imdbID, type, poster }])
-    setSearchMovieList((prev) => prev.map((i) => (i.imdbID === imdbID ? { ...i, bookMark: true } : i)))
+    const newBookMarkList = [...bookMarkMovieList, { title, year, imdbID, type, poster }]
+    setBookMarkMovieList(newBookMarkList)
+    setLocalStorage(BOOKMARKLIST, newBookMarkList)
   }
 
   const handleBookMark = () => {
-    bookMark ? deleteBookMark() : addBookMark()
+    isBookMark() ? deleteBookMark() : addBookMark()
   }
 
   return (
@@ -68,8 +76,8 @@ const Modal = ({ title, year, imdbID, type, poster, bookMark }: ModalModule.IMod
           <div className={styles.iconContainer}>
             <span className={styles.type}>{type}</span>
             <FontAwesomeIcon
-              icon={bookMark ? faStar : faEmptyStar}
-              className={cx(styles.icon, { [styles.isBookMarked]: bookMark })}
+              icon={isBookMark() ? faStar : faEmptyStar}
+              className={cx(styles.icon, { [styles.isBookMarked]: isBookMark() })}
               onClick={handleBookMark}
             />
           </div>
@@ -78,12 +86,7 @@ const Modal = ({ title, year, imdbID, type, poster, bookMark }: ModalModule.IMod
             <span>{title}</span>
           </div>
           <div className={styles.yearContainer}>
-            {year.map((i, idx) => (
-              <React.Fragment key={`year_${i}`}>
-                <span className={styles.year}>{i}</span>
-                <span>{year.length - 1 !== idx ? '-' : ''}</span>
-              </React.Fragment>
-            ))}
+            <span>{year}</span>
           </div>
           <div className={styles.imdbId}>{imdbID}</div>
 

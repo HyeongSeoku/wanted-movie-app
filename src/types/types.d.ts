@@ -7,6 +7,16 @@ export namespace componentsData {
   }
 }
 
+export namespace MovieListData {
+  interface IMovieList {
+    title: string
+    year: string
+    imdbID: string
+    type: string
+    poster: string
+  }
+}
+
 export namespace ApiResData {
   interface ISearchMovieData {
     Title: string
@@ -14,6 +24,13 @@ export namespace ApiResData {
     imdbID: string
     Type: string
     Poster: string
+  }
+
+  interface IMovieApiRes {
+    Search: ISearchMovieData[]
+    totalResults: string
+    Response: string
+    Error?: string
   }
 
   interface IAdditionalData {
@@ -51,7 +68,7 @@ export namespace SearchModule {
 export namespace ModalModule {
   interface IModalData {
     title: string
-    year: number[]
+    year: string
     imdbID: string
     type: string
     poster: string
@@ -72,16 +89,15 @@ export namespace movieCardModule {
 export namespace BookMarkModule {
   interface IBookMarkModule {
     title: string
-    year: number[]
+    year: string
     imdbID: string
     type: string
     poster: string
-    bookmarked?: boolean
   }
 
   interface IBookMarkCardData {
     title: string
-    year: number[]
+    year: string
     imdbID: string
     type: string
     poster: string

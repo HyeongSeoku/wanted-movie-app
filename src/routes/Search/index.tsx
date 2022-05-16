@@ -1,138 +1,113 @@
-import React, { useEffect, useState } from 'react'
-import * as _ from 'lodash'
+import React, { useCallback, useEffect, useState } from 'react'
+import _ from 'lodash'
 import styles from './Search.module.scss'
 import SearchInput from 'components/searchInput'
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
-import {
-  apiAdditionalData,
-  recentSearchWord,
-  loadingState,
-  modalCurrnetData,
-  searchMovieData,
-  searchPageNumber,
-  bookMarkList,
-} from 'utils/atoms/atom'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { loadingState, modalCurrnetData, movieListState, searchPageNumber } from 'utils/atoms/atom'
 import MovieCard from 'components/movieCard'
 import { moviesApi } from 'service/api'
 import { useInView } from 'react-intersection-observer'
-import { ApiResData, SearchModule } from 'types/types.d'
+import { MovieListData } from 'types/types.d'
 import Modal from 'components/modal'
 import Loader from 'components/loader'
-import SearchMethod from './searchMethod'
+import { useSearchParams } from 'react-router-dom'
+import { useMount, useUpdateEffect } from 'react-use'
+
+const ERROR_MSG = {
+  NO_RESULT: '검색 결과가 없습니다.',
+  TOO_MANY_RESULT: '검색어가 너무 짧습니다.',
+  CANNOT_KOREAN: '한글은 지원되지 않습니다.',
+  NET_ERROR: '현재 검색이 불가능합니다.',
+}
 
 const Search = (): JSX.Element => {
-  const [nowSearchValue, setNowSearchValue] = useState<string>('')
-  const [searchMovieList, setSearchMovieList] = useRecoilState(searchMovieData)
-  const [additionalData, setAdditionalData] = useRecoilState(apiAdditionalData)
+  const [movieList, setMovieList] = useRecoilState(movieListState)
+  const [errorMessage, setErrorMessage] = useState<string>('')
+  const [searchParams] = useSearchParams()
+  const currentSearchWord = searchParams.get('s')
 
-  const recentWord = useRecoilValue(recentSearchWord)
   const modalData = useRecoilValue(modalCurrnetData)
-  const bookMarkData = useRecoilValue(bookMarkList)
 
   const [pageNumber, setPageNumber] = useRecoilState(searchPageNumber)
   const [isLoading, setIsLoading] = useRecoilState(loadingState)
 
-  const resetSeachList = useResetRecoilState(searchMovieData)
-  const resetPageNumber = useResetRecoilState(searchPageNumber)
-  const resetAdditionalData = useResetRecoilState(apiAdditionalData)
-
   const [ref, inView] = useInView()
 
-  // useEffect 페이지 증가 감지 => api  실행
-  useEffect(() => {
-    if (additionalData.lastPageNumber > 1) {
-      if (pageNumber !== 1 && pageNumber !== 0) callMoreApiData(pageNumber)
-    }
-  }, [pageNumber])
+  const checkKorean = (word: string) => {
+    const koreanReg = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/
+    return koreanReg.test(word)
+  }
 
-  useEffect(() => {
-    if (inView) {
-      if (pageNumber < additionalData.lastPageNumber && nowSearchValue.trim() === recentWord.trim())
-        setPageNumber((prev) => prev + 1)
-    }
-  }, [inView])
-
-  function callMoreApiData(page: number) {
+  const getMovieList = useCallback(async () => {
+    if (!currentSearchWord) return
+    setErrorMessage(ERROR_MSG.NO_RESULT)
     setIsLoading(true)
-    moviesApi.searchMovielist(recentWord, page).then((res) => {
-      const dataList = res.data.Search
 
-      let tmpList: SearchModule.ISearchMovieList[] = []
-      if (dataList !== undefined) {
-        dataList.map((data: ApiResData.ISearchMovieData) => {
-          const { Title: title, Year: year, imdbID, Type: type, Poster: poster } = data
-          let tmpYear = data.Year.split('–').map((item) => Number(item))
-          tmpYear = tmpYear.filter((yearI) => yearI !== 0)
+    await moviesApi
+      .searchMovielist({ s: currentSearchWord, page: pageNumber })
+      .then((res) => {
+        const { Response: response, Error: error, Search: search } = res.data
 
-          // 데이터 처리
-          tmpList.push({
-            title,
-            year: tmpYear,
-            imdbID,
-            type,
-            poster,
-            bookMark: SearchMethod.existIdBookMarkList(bookMarkData, data.imdbID),
-          })
+        if (response === 'False') {
+          if (checkKorean(currentSearchWord)) {
+            setErrorMessage(ERROR_MSG.CANNOT_KOREAN)
+            ref(null)
+            return
+          }
+          if (error === ERROR_MSG.TOO_MANY_RESULT) setErrorMessage(ERROR_MSG.TOO_MANY_RESULT)
+
+          ref(null)
+          return // early return pattern
+        }
+        let tmpList: MovieListData.IMovieList[] = []
+        search.forEach((item) => {
+          const { Title: title, Year: year, imdbID, Type: type, Poster: poster } = item
+          tmpList.push({ title, year, imdbID, type, poster })
         })
 
-        tmpList = searchMovieList.concat(tmpList)
-        tmpList = _.uniqBy(tmpList, 'imdbID')
+        tmpList = _.uniqBy(tmpList, 'imdbID') // 중복제거
+        setMovieList((prev) => [...prev, ...tmpList])
+      })
+      .catch(() => {
+        setErrorMessage(ERROR_MSG.NET_ERROR)
+      })
+    setIsLoading(false)
+  }, [currentSearchWord, pageNumber, ref, setMovieList])
 
-        setIsLoading(false)
-        setSearchMovieList(tmpList)
-      }
-    })
-  }
+  useMount(() => {
+    console.log('마운트됨')
 
-  function resetAllData() {
-    resetSeachList()
-    resetPageNumber()
-    resetAdditionalData()
-  }
+    getMovieList()
+  })
+
+  useEffect(() => {
+    if (inView) setPageNumber((prev) => prev + 1)
+  }, [inView, setPageNumber])
+
+  useUpdateEffect(() => {
+    console.log('실행')
+
+    getMovieList()
+  }, [getMovieList])
 
   return (
     <div className={styles.searchSection}>
-      <Modal
-        title={modalData.title}
-        year={modalData.year}
-        imdbID={modalData.imdbID}
-        type={modalData.type}
-        poster={modalData.poster}
-        bookMark={modalData.bookMark}
-      />
+      <Modal movie={modalData} />
       {isLoading && <Loader />}
       <main className={styles.searchMain}>
-        <SearchInput searchWord={nowSearchValue} setSearchWord={setNowSearchValue} />
+        <SearchInput />
         <section className={styles.movieSection}>
-          {searchMovieList.length !== 0 ? (
-            searchMovieList.map((movie, idx) => (
-              <React.Fragment key={`movie_${movie.imdbID}`}>
-                {searchMovieList.length - 1 === idx ? (
-                  <div ref={ref}>
-                    <MovieCard
-                      title={movie.title}
-                      year={movie.year}
-                      imdbID={movie.imdbID}
-                      type={movie.type}
-                      poster={movie.poster}
-                      bookMark={movie.bookMark}
-                    />
-                  </div>
-                ) : (
-                  <MovieCard
-                    title={movie.title}
-                    year={movie.year}
-                    imdbID={movie.imdbID}
-                    type={movie.type}
-                    poster={movie.poster}
-                    bookMark={movie.bookMark}
-                  />
-                )}
-              </React.Fragment>
-            ))
-          ) : (
-            <div>검색 결과가 없습니다. </div>
+          {movieList.length === 0 && !isLoading && <span>{errorMessage}</span>}
+          {movieList && (
+            <ul className={styles.movieSection}>
+              {movieList.map((movie) => (
+                <li key={`search_list_${movie.imdbID}`} className={styles.movieItem}>
+                  <MovieCard movie={movie} />
+                </li>
+              ))}
+            </ul>
           )}
+          {currentSearchWord && movieList.length !== 0 && <div ref={ref} />}
         </section>
       </main>
     </div>

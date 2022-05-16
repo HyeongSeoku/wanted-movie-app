@@ -4,15 +4,16 @@ import React, { useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilState } from 'recoil'
-import { bookMarkList, searchMovieData } from 'utils/atoms/atom'
+import { bookMarkList, movieListState } from 'utils/atoms/atom'
 import { BOOKMARKLIST } from 'utils/constants/componentsData'
+import { setLocalStorage } from 'service/store'
 
 const BookMarkCard = ({ title, year, imdbID, type, poster }: BookMarkModule.IBookMarkCardData) => {
   const [bookMarkData, setBookMarkData] = useRecoilState<BookMarkModule.IBookMarkModule[]>(bookMarkList)
-  const [searchMovieList, setSearchMovieList] = useRecoilState(searchMovieData)
+  const [searchMovieList, setSearchMovieList] = useRecoilState(movieListState)
 
   useEffect(() => {
-    localStorage.setItem(BOOKMARKLIST, JSON.stringify(bookMarkData))
+    setLocalStorage(BOOKMARKLIST, bookMarkData)
   }, [bookMarkData])
 
   const deleteBookMark = () => {
@@ -35,12 +36,7 @@ const BookMarkCard = ({ title, year, imdbID, type, poster }: BookMarkModule.IBoo
           </span>
           <FontAwesomeIcon className={styles.bookMarkIcon} icon={faTrash} onClick={deleteBookMark} />
           <ul className={styles.yearContainer}>
-            {year.map((i, idx) => (
-              <li key={`year_${i}`}>
-                <span className={styles.year}>{i}</span>
-                <span>{year.length - 1 !== idx ? '-' : ''}</span>
-              </li>
-            ))}
+            <span className={styles.year}>{year}</span>
           </ul>
           <div className={styles.imdbContainer}>
             <div className={styles.type}>{type}</div>

@@ -1,48 +1,37 @@
-import React, { useEffect, useState } from 'react'
 import styles from './movieCard.module.scss'
-import { SearchModule } from 'types/types.d'
+import { ModalModule, MovieListData } from 'types/types.d'
 import cx from 'classnames'
 import { faStar as faEmptyStar } from '@fortawesome/free-regular-svg-icons'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { bookMarkList, modalCurrnetData, modalOpen } from 'utils/atoms/atom'
-import SearchMethod from 'routes/Search/searchMethod'
+import { getLocalStorage, setLocalStorage } from 'service/store'
+import { BOOKMARKLIST } from 'utils/constants/componentsData'
+import { useEffect } from 'react'
 
-const MovieCard = ({ title, year, imdbID, type, poster, bookMark }: SearchModule.ISearchMovieList): JSX.Element => {
-  const [cardData, setCardData] = useState<SearchModule.ISearchMovieCard>({
-    title,
-    year,
-    imdbID,
-    type,
-    poster,
-    bookMark,
-  })
-  const [bookMarkData, setBookMarkData] = useRecoilState(bookMarkList)
-  const [isBookMark, setIsBookMark] = useState<boolean>(SearchMethod.existIdBookMarkList(bookMarkData, imdbID))
+interface IMovieCard {
+  movie: MovieListData.IMovieList
+}
 
+const MovieCard = ({ movie }: IMovieCard): JSX.Element => {
+  const { title, year, imdbID, type, poster } = movie
+  const setModalData = useSetRecoilState<MovieListData.IMovieList>(modalCurrnetData)
+  const localStorageData = getLocalStorage(BOOKMARKLIST) || []
+  const bookMarkMovieList = useRecoilValue(bookMarkList)
   const setIsModalOpen = useSetRecoilState(modalOpen)
-  const setCurrentModalData = useSetRecoilState(modalCurrnetData)
 
   useEffect(() => {
-    setCardData({ title, year, imdbID, type, poster, bookMark })
-  }, [title, year, imdbID, type, poster, bookMark])
+    setLocalStorage(BOOKMARKLIST, bookMarkMovieList)
+  }, [bookMarkMovieList])
 
-  useEffect(() => {
-    setCurrentModalData(cardData)
-  }, [cardData])
+  const isBookMark = () => {
+    return localStorageData.find((item: MovieListData.IMovieList) => item.imdbID === imdbID)
+  }
 
-  useEffect(() => {
-    setIsBookMark(SearchMethod.existIdBookMarkList(bookMarkData, imdbID))
-  }, [bookMarkData])
-
-  useEffect(() => {
-    setCurrentModalData({ title, year, imdbID, type, poster, bookMark })
-  }, [])
-
-  const handleClickMovieCard = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleClickMovieCard = () => {
+    setModalData(movie)
     setIsModalOpen(true)
-    setCurrentModalData(cardData)
   }
 
   return (
@@ -57,17 +46,12 @@ const MovieCard = ({ title, year, imdbID, type, poster, bookMark }: SearchModule
             <strong>{title}</strong>
           </span>
           <FontAwesomeIcon
-            className={cx(styles.bookMarkIcon, { [styles.isBookMarked]: bookMark })}
-            icon={bookMark ? faStar : faEmptyStar}
+            className={cx(styles.bookMarkIcon, { [styles.isBookMarked]: isBookMark() })}
+            icon={isBookMark() ? faStar : faEmptyStar}
           />
 
           <div className={styles.yearContainer}>
-            {year.map((i, idx) => (
-              <React.Fragment key={`year_${i}`}>
-                <span className={styles.year}>{i}</span>
-                <span>{year.length - 1 !== idx ? '-' : ''}</span>
-              </React.Fragment>
-            ))}
+            <span>{year}</span>
           </div>
           <div className={styles.imdbContainer}>
             <div className={styles.type}>{type}</div>

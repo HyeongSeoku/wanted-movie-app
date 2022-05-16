@@ -1,5 +1,5 @@
 import { atom } from 'recoil'
-import { ApiResData, BookMarkModule, ModalModule, SearchModule } from 'types/types.d'
+import { ApiResData, BookMarkModule, ModalModule, MovieListData } from 'types/types.d'
 
 export const themeMode = atom<string>({
   key: '#themeMode',
@@ -16,14 +16,14 @@ export const recentSearchWord = atom<string>({
   default: '',
 })
 
-export const searchMovieData = atom<SearchModule.ISearchMovieList[]>({
-  key: '#searchMovieData',
+export const movieListState = atom<MovieListData.IMovieList[]>({
+  key: '#movieListState',
   default: [],
 })
 
 export const searchPageNumber = atom<number>({
   key: '#searchPageNumber',
-  default: 0,
+  default: 1,
 })
 
 export const apiAdditionalData = atom<ApiResData.IAdditionalData>({
@@ -36,9 +36,9 @@ export const modalOpen = atom<boolean>({
   default: false,
 })
 
-export const modalCurrnetData = atom<ModalModule.IModalData>({
+export const modalCurrnetData = atom<MovieListData.IMovieList>({
   key: '#modalCurrnetData',
-  default: { title: '', year: [], imdbID: '', type: '', poster: '', bookMark: false },
+  default: { title: '', year: '', imdbID: '', type: '', poster: '' },
 })
 
 export const loadingState = atom<boolean>({
@@ -47,7 +47,7 @@ export const loadingState = atom<boolean>({
 })
 
 // bookmark
-export const bookMarkList = atom<BookMarkModule.IBookMarkModule[]>({
+export const bookMarkList = atom<MovieListData.IMovieList[]>({
   key: '#BookMarkList',
   default: [],
 })
