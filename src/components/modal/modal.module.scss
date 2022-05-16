@@ -13,6 +13,7 @@
   height: 100%;
   overflow: hidden;
   visibility: hidden;
+  backdrop-filter: blur(4px);
   background-color: colors.$MODALBGCOLOR;
   animation: fadeOut 0.3s ease-in;
 }
