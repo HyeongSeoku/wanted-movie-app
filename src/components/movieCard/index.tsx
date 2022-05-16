@@ -48,19 +48,19 @@ const MovieCard = ({ title, year, imdbID, type, poster, bookMark }: SearchModule
   return (
     <article className={styles.cardContainer}>
       <div role='button' tabIndex={0} className={styles.cardContents} onClick={handleClickMovieCard}>
-        <img className={styles.poster} src={poster} alt={`${title}_이미지`} />
-        <div className={styles.contentContainer}>
-          <div className={styles.iconContainer}>
-            <div className={styles.type}>{type}</div>
-            <FontAwesomeIcon
-              className={cx(styles.bookMarkIcon, { [styles.isBookMarked]: bookMark })}
-              icon={bookMark ? faStar : faEmptyStar}
-            />
-          </div>
+        <div className={styles.posterContainer}>
+          <img className={styles.poster} src={poster} alt={`${title}_이미지`} />
+        </div>
 
+        <div className={styles.contentContainer}>
           <span className={styles.movieTitle}>
             <strong>{title}</strong>
           </span>
+          <FontAwesomeIcon
+            className={cx(styles.bookMarkIcon, { [styles.isBookMarked]: bookMark })}
+            icon={bookMark ? faStar : faEmptyStar}
+          />
+
           <div className={styles.yearContainer}>
             {year.map((i, idx) => (
               <React.Fragment key={`year_${i}`}>
@@ -69,7 +69,10 @@ const MovieCard = ({ title, year, imdbID, type, poster, bookMark }: SearchModule
               </React.Fragment>
             ))}
           </div>
-          <div className={styles.imdbId}>{imdbID}</div>
+          <div className={styles.imdbContainer}>
+            <div className={styles.type}>{type}</div>
+            <div className={styles.imdbId}>#{imdbID}</div>
+          </div>
         </div>
       </div>
     </article>
