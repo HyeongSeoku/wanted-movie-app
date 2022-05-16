@@ -29,8 +29,8 @@ const App = () => {
         <div className={styles.wrapper}>
           <Routes>
             <Route path='/' element={<Search />} />
-            <Route path='/bookMark' element={<BookMark />} />
-            <Route path='/*' element={<NotFoundPage />} />
+            <Route path='bookMark' element={<BookMark />} />
+            <Route path='*' element={<NotFoundPage />} />
           </Routes>
         </div>
         <NavBar />
