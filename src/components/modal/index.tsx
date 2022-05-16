@@ -49,7 +49,8 @@ const Modal = ({ title, year, imdbID, type, poster, bookMark }: ModalModule.IMod
 
   return (
     <section
-      role='section'
+      role='button'
+      tabIndex={0}
       ref={backDropRef}
       className={cx(styles.modalWrapper, { [styles.open]: isModalOpen })}
       onClick={handleModalData}

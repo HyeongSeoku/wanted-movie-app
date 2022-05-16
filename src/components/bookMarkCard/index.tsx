@@ -25,7 +25,7 @@ const BookMarkCard = ({ title, year, imdbID, type, poster }: BookMarkModule.IBoo
 
   return (
     <article className={styles.bookMarkCardContainer}>
-      <div role='button' tabIndex={0} className={styles.bookMarkCardContents}>
+      <div className={styles.bookMarkCardContents}>
         <div className={styles.posterContainer}>
           <img className={styles.poster} src={poster} alt={`${title}`} />
         </div>
