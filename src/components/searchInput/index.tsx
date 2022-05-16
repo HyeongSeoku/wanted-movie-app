@@ -106,11 +106,13 @@ const SearchInput = ({ searchWord, setSearchWord }: SearchInputModule.ISearchInp
   }
 
   return (
-    <div className={styles.searchContainer}>
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <FontAwesomeIcon className={styles.icon} icon={faSearch} />
-        <input className={styles.input} placeholder='search' value={searchWord} onChange={handleChange} />
-      </form>
+    <div className={styles.searchBackDrop}>
+      <div className={styles.searchContainer}>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <FontAwesomeIcon className={styles.icon} icon={faSearch} />
+          <input className={styles.input} placeholder='search' value={searchWord} onChange={handleChange} />
+        </form>
+      </div>
     </div>
   )
 }
