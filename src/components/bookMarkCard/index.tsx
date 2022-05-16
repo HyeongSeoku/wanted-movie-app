@@ -26,27 +26,52 @@ const BookMarkCard = ({ title, year, imdbID, type, poster }: BookMarkModule.IBoo
   return (
     <article className={styles.bookMarkCardContainer}>
       <div role='button' tabIndex={0} className={styles.bookMarkCardContents}>
-        <img className={styles.poster} src={poster} alt={`${title}_이미지`} />
+        <div className={styles.posterContainer}>
+          <img className={styles.poster} src={poster} alt={`${title}`} />
+        </div>
         <div className={styles.contentContainer}>
-          <div className={styles.iconContainer}>
-            <FontAwesomeIcon icon={faTrash} onClick={deleteBookMark} />
-          </div>
           <span className={styles.movieTitle}>
             <strong>{title}</strong>
           </span>
+          <FontAwesomeIcon className={styles.bookMarkIcon} icon={faTrash} onClick={deleteBookMark} />
           <div className={styles.yearContainer}>
             {year.map((i, idx) => (
               <React.Fragment key={`year_${i}`}>
-                <span>{i}</span>
+                <span className={styles.year}>{i}</span>
                 <span>{year.length - 1 !== idx ? '-' : ''}</span>
               </React.Fragment>
             ))}
           </div>
-          <div>{type}</div>
-          <div>{imdbID}</div>
+          <div className={styles.imdbContainer}>
+            <div className={styles.type}>{type}</div>
+            <div className={styles.imdbId}>#{imdbID}</div>
+          </div>
         </div>
       </div>
     </article>
+    // <article className={styles.bookMarkCardContainer}>
+    //   <div role='button' tabIndex={0} className={styles.bookMarkCardContents}>
+    //     <img className={styles.poster} src={poster} alt={`${title}_이미지`} />
+    //     <div className={styles.contentContainer}>
+    //       <div className={styles.iconContainer}>
+    //         <FontAwesomeIcon icon={faTrash} onClick={deleteBookMark} />
+    //       </div>
+    //       <span className={styles.movieTitle}>
+    //         <strong>{title}</strong>
+    //       </span>
+    //       <div className={styles.yearContainer}>
+    //         {year.map((i, idx) => (
+    //           <React.Fragment key={`year_${i}`}>
+    //             <span>{i}</span>
+    //             <span>{year.length - 1 !== idx ? '-' : ''}</span>
+    //           </React.Fragment>
+    //         ))}
+    //       </div>
+    //       <div>{type}</div>
+    //       <div>{imdbID}</div>
+    //     </div>
+    //   </div>
+    // </article>
   )
 }
 
