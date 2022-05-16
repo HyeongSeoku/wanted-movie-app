@@ -1,31 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import * as _ from 'lodash'
 import styles from './Search.module.scss'
-import cx from 'classnames'
-import SearchInput from '../../components/searchInput'
+import SearchInput from 'components/searchInput'
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import {
   apiAdditionalData,
   recentSearchWord,
   loadingState,
   modalCurrnetData,
-  modalOpen,
   searchMovieData,
   searchPageNumber,
   bookMarkList,
-} from '../../utils/atoms/atom'
-import MovieCard from '../../components/movieCard'
-import { moviesApi } from '../../utils/apis/api'
-import { FIRST_PAGE } from '../../utils/constants/standard'
+} from 'utils/atoms/atom'
+import MovieCard from 'components/movieCard'
+import { moviesApi } from 'utils/apis/api'
 import { useInView } from 'react-intersection-observer'
-import { ApiResData, SearchModule } from '../../types/types.d'
-import Modal from '../../components/modal'
-import Loader from '../../components/loader'
-import { BOOKMARKLIST } from '../../utils/constants/componentsData'
+import { ApiResData, SearchModule } from 'types/types.d'
+import Modal from 'components/modal'
+import Loader from 'components/loader'
 import SearchMethod from './searchMethod'
 
 const Search = (): JSX.Element => {
-  const [localStorageData] = useState<string | null>(localStorage.getItem(BOOKMARKLIST))
   const [nowSearchValue, setNowSearchValue] = useState<string>('')
   const [searchMovieList, setSearchMovieList] = useRecoilState(searchMovieData)
   const [additionalData, setAdditionalData] = useRecoilState(apiAdditionalData)
@@ -35,7 +30,6 @@ const Search = (): JSX.Element => {
   const bookMarkData = useRecoilValue(bookMarkList)
 
   const [pageNumber, setPageNumber] = useRecoilState(searchPageNumber)
-  const [isModalOpen, setIsModalOpen] = useRecoilState(modalOpen)
   const [isLoading, setIsLoading] = useRecoilState(loadingState)
 
   const resetSeachList = useResetRecoilState(searchMovieData)
@@ -47,7 +41,7 @@ const Search = (): JSX.Element => {
   // useEffect 페이지 증가 감지 => api  실행
   useEffect(() => {
     if (additionalData.lastPageNumber > 1) {
-      if (pageNumber !== FIRST_PAGE && pageNumber !== 0) callMoreApiData(pageNumber)
+      if (pageNumber !== 1 && pageNumber !== 0) callMoreApiData(pageNumber)
     }
   }, [pageNumber])
 
@@ -65,8 +59,9 @@ const Search = (): JSX.Element => {
 
       let tmpList: SearchModule.ISearchMovieList[] = []
       if (dataList !== undefined) {
-        dataList.map((i: ApiResData.ISearchMovieData) => {
-          let tmpYear = i.Year.split('–').map((item) => Number(item))
+        dataList.map((data: ApiResData.ISearchMovieData) => {
+          const { Title: title, Year: year, imdbID, Type: type, Poster: poster } = data
+          let tmpYear = data.Year.split('–').map((item) => Number(item))
           tmpYear = tmpYear.filter((yearI) => yearI !== 0)
 
           // 데이터 처리

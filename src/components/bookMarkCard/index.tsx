@@ -1,11 +1,11 @@
 import styles from './bookMarkCard.module.scss'
-import { BookMarkModule } from '../../types/types.d'
+import { BookMarkModule } from 'types/types.d'
 import React, { useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilState } from 'recoil'
-import { bookMarkList, searchMovieData } from '../../utils/atoms/atom'
-import { BOOKMARKLIST } from '../../utils/constants/componentsData'
+import { bookMarkList, searchMovieData } from 'utils/atoms/atom'
+import { BOOKMARKLIST } from 'utils/constants/componentsData'
 
 const BookMarkCard = ({ title, year, imdbID, type, poster }: BookMarkModule.IBookMarkCardData) => {
   const [bookMarkData, setBookMarkData] = useRecoilState<BookMarkModule.IBookMarkModule[]>(bookMarkList)

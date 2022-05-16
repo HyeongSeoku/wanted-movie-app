@@ -1,6 +1,5 @@
-import React from 'react'
 import cx from 'classnames'
-import { NAV_DATA } from '../../utils/constants/componentsData'
+import { NAV_DATA } from 'utils/constants/componentsData'
 import styles from './navBar.module.scss'
 import { NavLink, useLocation } from 'react-router-dom'
 

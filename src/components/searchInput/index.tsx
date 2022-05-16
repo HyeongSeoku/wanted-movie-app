@@ -11,12 +11,12 @@ import {
   searchMovieData,
   searchPageNumber,
   bookMarkList,
-} from '../../utils/atoms/atom'
-import { moviesApi } from '../../utils/apis/api'
-import { DATA_COUNT, FIRST_PAGE } from '../../utils/constants/standard'
-import { ApiResData, SearchInputModule, SearchModule } from '../../types/types.d'
-import SearchMethod from '../../routes/Search/searchMethod'
-import { MESSAGE } from '../../utils/constants/componentsData'
+} from 'utils/atoms/atom'
+import { moviesApi } from 'utils/apis/api'
+import { DATA_COUNT, FIRST_PAGE } from 'utils/constants/standard'
+import { ApiResData, SearchInputModule, SearchModule } from 'types/types.d'
+import SearchMethod from 'routes/Search/searchMethod'
+import { MESSAGE } from 'utils/constants/componentsData'
 
 // TODO : search validation 추가
 

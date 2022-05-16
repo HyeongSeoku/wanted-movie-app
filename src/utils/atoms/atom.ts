@@ -1,5 +1,5 @@
 import { atom } from 'recoil'
-import { ApiResData, BookMarkModule, ModalModule, SearchModule } from '../../types/types.d'
+import { ApiResData, BookMarkModule, ModalModule, SearchModule } from 'types/types.d'
 
 export const themeMode = atom<string>({
   key: '#themeMode',

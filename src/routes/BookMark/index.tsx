@@ -1,8 +1,5 @@
 import styles from './BookMark.module.scss'
-import cx from 'classnames'
-import BookMarkCard from '../../components/bookMarkCard'
-import { DragDropContext } from 'react-beautiful-dnd'
-import BookMarkListConatiner from '../../components/bookMarkListContainer'
+import BookMarkListConatiner from 'components/bookMarkListContainer'
 
 const BookMark = () => {
   return (

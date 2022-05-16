@@ -1,5 +1,5 @@
 import styles from './NotFound404.module.scss'
-import notFoundImg from '../../images/notfound.png'
+import notFoundImg from 'images/notfound.png'
 
 const NotFoundPage = () => {
   return (

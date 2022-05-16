@@ -1,13 +1,13 @@
 import { useRecoilState } from 'recoil'
 import styles from './modal.module.scss'
-import { bookMarkList, modalOpen, searchMovieData } from '../../utils/atoms/atom'
+import { bookMarkList, modalOpen, searchMovieData } from 'utils/atoms/atom'
 import cx from 'classnames'
 import React, { useEffect, useRef, useState } from 'react'
-import { BookMarkModule, LocalStorageModule, ModalModule } from '../../types/types.d'
+import { BookMarkModule, LocalStorageModule, ModalModule } from 'types/types.d'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar as faEmptyStar } from '@fortawesome/free-regular-svg-icons'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
-import { BOOKMARKLIST } from '../../utils/constants/componentsData'
+import { BOOKMARKLIST } from 'utils/constants/componentsData'
 
 // TODO : esc 눌렀을때 모달 닫히도록 동작
 

@@ -1,10 +1,10 @@
 import styles from './bookMarkListContainer.module.scss'
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd'
 import { useRecoilState } from 'recoil'
-import { BookMarkModule } from '../../types/types.d'
+import { BookMarkModule } from 'types/types.d'
 import _ from 'lodash'
-import { bookMarkList } from '../../utils/atoms/atom'
-import BookMarkCard from '../bookMarkCard'
+import { bookMarkList } from 'utils/atoms/atom'
+import BookMarkCard from 'components/bookMarkCard'
 
 const BookMarkListConatiner = () => {
   const [bookMarkData, setBookMarkData] = useRecoilState(bookMarkList)

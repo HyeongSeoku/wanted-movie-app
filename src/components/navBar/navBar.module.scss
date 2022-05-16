@@ -1,10 +1,9 @@
-@use '../../styles/constants/colors';
+@use 'styles/constants/colors';
 
 .footer {
   position: relative;
   display: block;
   border-radius: 8px;
-  transform: translateY(-100%);
 }
 
 .navContainer {
@@ -15,7 +14,7 @@
 .navList {
   display: flex;
   flex-direction: row;
-  height: 2rem;
+  height: 20px;
 }
 
 .navItem {
@@ -28,7 +27,7 @@
 .navButton {
   width: 100%;
   height: 100%;
-  font-size: 1.2rem;
+  font-size: 18px;
   color: colors.$WHITE;
   border-radius: 8px;
 

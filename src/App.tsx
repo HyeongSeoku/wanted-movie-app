@@ -1,7 +1,7 @@
 import React from 'react'
 import cn from './styles/App.module.scss'
 
-function App() {
+const App = () => {
   return (
     <div className={cn.app}>
       <main>메인 영역</main>

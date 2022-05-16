@@ -1,14 +1,13 @@
 import styles from './Route.module.scss'
-import cx from 'classnames'
 import { Route, Routes } from 'react-router-dom'
 import Search from './Search'
 import BookMark from './BookMark'
 import NavBar from '../components/navBar'
 import NotFoundPage from './NotFound404'
 import { useEffect, useState } from 'react'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { bookMarkList } from '../utils/atoms/atom'
-import { BOOKMARKLIST } from '../utils/constants/componentsData'
+import { useSetRecoilState } from 'recoil'
+import { bookMarkList } from 'utils/atoms/atom'
+import { BOOKMARKLIST } from 'utils/constants/componentsData'
 
 const App = () => {
   const [localStorageData] = useState<string | null>(localStorage.getItem(BOOKMARKLIST))
@@ -22,7 +21,7 @@ const App = () => {
   useEffect(() => {
     if (localStorageData === null) localStorage.setItem(BOOKMARKLIST, JSON.stringify([]))
     else setBookMarkData(JSON.parse(localStorageData))
-  }, [localStorageData])
+  }, [localStorageData, setBookMarkData])
 
   return (
     <div className={styles.app}>

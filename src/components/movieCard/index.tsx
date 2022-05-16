@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import styles from './movieCard.module.scss'
-import { BookMarkModule, SearchModule } from '../../types/types.d'
+import { SearchModule } from 'types/types.d'
 import cx from 'classnames'
 import { faStar as faEmptyStar } from '@fortawesome/free-regular-svg-icons'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { bookMarkList, modalCurrnetData, modalOpen } from '../../utils/atoms/atom'
-import { BOOKMARKLIST } from '../../utils/constants/componentsData'
-import SearchMethod from '../../routes/Search/searchMethod'
+import { bookMarkList, modalCurrnetData, modalOpen } from 'utils/atoms/atom'
+import SearchMethod from 'routes/Search/searchMethod'
 
 const MovieCard = ({ title, year, imdbID, type, poster, bookMark }: SearchModule.ISearchMovieList): JSX.Element => {
   const [cardData, setCardData] = useState<SearchModule.ISearchMovieCard>({

@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './darkMode.module.scss'
 import { useSetRecoilState } from 'recoil'
-import { themeMode } from '../../utils/atoms/atom'
+import { themeMode } from 'utils/atoms/atom'
 
 const DarkModeSwitch = () => {
   const setIsDarkMode = useSetRecoilState(themeMode)
