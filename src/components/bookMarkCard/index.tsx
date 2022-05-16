@@ -34,14 +34,14 @@ const BookMarkCard = ({ title, year, imdbID, type, poster }: BookMarkModule.IBoo
             <strong>{title}</strong>
           </span>
           <FontAwesomeIcon className={styles.bookMarkIcon} icon={faTrash} onClick={deleteBookMark} />
-          <div className={styles.yearContainer}>
+          <ul className={styles.yearContainer}>
             {year.map((i, idx) => (
-              <React.Fragment key={`year_${i}`}>
+              <li key={`year_${i}`}>
                 <span className={styles.year}>{i}</span>
                 <span>{year.length - 1 !== idx ? '-' : ''}</span>
-              </React.Fragment>
+              </li>
             ))}
-          </div>
+          </ul>
           <div className={styles.imdbContainer}>
             <div className={styles.type}>{type}</div>
             <div className={styles.imdbId}>#{imdbID}</div>
