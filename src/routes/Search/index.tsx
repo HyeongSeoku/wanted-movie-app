@@ -13,7 +13,7 @@ import {
   bookMarkList,
 } from 'utils/atoms/atom'
 import MovieCard from 'components/movieCard'
-import { moviesApi } from 'utils/apis/api'
+import { moviesApi } from 'service/api'
 import { useInView } from 'react-intersection-observer'
 import { ApiResData, SearchModule } from 'types/types.d'
 import Modal from 'components/modal'

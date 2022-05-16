@@ -12,7 +12,7 @@ import {
   searchPageNumber,
   bookMarkList,
 } from 'utils/atoms/atom'
-import { moviesApi } from 'utils/apis/api'
+import { moviesApi } from 'service/api'
 import { DATA_COUNT, FIRST_PAGE } from 'utils/constants/standard'
 import { ApiResData, SearchInputModule, SearchModule } from 'types/types.d'
 import SearchMethod from 'routes/Search/searchMethod'
