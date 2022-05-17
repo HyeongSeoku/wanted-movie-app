@@ -2,8 +2,8 @@ import { useRecoilState } from 'recoil'
 import styles from './modal.module.scss'
 import { bookMarkList, modalOpen } from 'utils/atoms/atom'
 import cx from 'classnames'
-import React, { useEffect, useRef } from 'react'
-import { ModalModule, MovieListData } from 'types/types.d'
+import React, { useRef } from 'react'
+import { MovieListData } from 'types/types.d'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar as faEmptyStar } from '@fortawesome/free-regular-svg-icons'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
@@ -30,7 +30,7 @@ const Modal = ({ movie }: IModal) => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(modalOpen)
   const backDropRef = useRef<HTMLElement>(null)
 
-  useEffect(() => {}, [bookMarkMovieList])
+  // useEffect(() => {}, [bookMarkMovieList])
 
   const isBookMark = () => {
     return bookMarkMovieList.find((item: MovieListData.IMovieList) => item.imdbID === imdbID)

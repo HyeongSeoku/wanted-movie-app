@@ -1,5 +1,5 @@
 import styles from './movieCard.module.scss'
-import { ModalModule, MovieListData } from 'types/types.d'
+import { MovieListData } from 'types/types.d'
 import cx from 'classnames'
 import { faStar as faEmptyStar } from '@fortawesome/free-regular-svg-icons'
 import { faStar } from '@fortawesome/free-solid-svg-icons'

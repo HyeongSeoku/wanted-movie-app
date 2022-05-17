@@ -3,7 +3,7 @@ import _ from 'lodash'
 import styles from './Search.module.scss'
 import SearchInput from 'components/searchInput'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { loadingState, modalCurrnetData, movieListState, searchPageNumber } from 'utils/atoms/atom'
+import { loadingState, modalCurrnetData, modalOpen, movieListState, searchPageNumber } from 'utils/atoms/atom'
 import MovieCard from 'components/movieCard'
 import { moviesApi } from 'service/api'
 import { useInView } from 'react-intersection-observer'
@@ -72,11 +72,9 @@ const Search = (): JSX.Element => {
         setErrorMessage(ERROR_MSG.NET_ERROR)
       })
     setIsLoading(false)
-  }, [currentSearchWord, pageNumber, ref, setMovieList])
+  }, [currentSearchWord, pageNumber, ref, setIsLoading, setMovieList])
 
   useMount(() => {
-    console.log('마운트됨')
-
     getMovieList()
   })
 
@@ -85,14 +83,12 @@ const Search = (): JSX.Element => {
   }, [inView, setPageNumber])
 
   useUpdateEffect(() => {
-    console.log('실행')
-
     getMovieList()
   }, [getMovieList])
 
   return (
     <div className={styles.searchSection}>
-      <Modal movie={modalData} />
+      {modalOpen && <Modal movie={modalData} />}
       {isLoading && <Loader />}
       <main className={styles.searchMain}>
         <SearchInput />

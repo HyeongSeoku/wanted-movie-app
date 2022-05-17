@@ -4,24 +4,24 @@ import Search from './Search'
 import BookMark from './BookMark'
 import NavBar from '../components/navBar'
 import NotFoundPage from './NotFound404'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useSetRecoilState } from 'recoil'
 import { bookMarkList } from 'utils/atoms/atom'
 import { BOOKMARKLIST } from 'utils/constants/componentsData'
+import { useMount } from 'react-use'
+import { getLocalStorage, setLocalStorage } from 'service/store'
 
 const App = () => {
-  const [localStorageData] = useState<string | null>(localStorage.getItem(BOOKMARKLIST))
   const setBookMarkData = useSetRecoilState(bookMarkList)
 
-  useEffect(() => {
-    if (localStorageData === null) localStorage.setItem(BOOKMARKLIST, JSON.stringify([]))
-    else setBookMarkData(JSON.parse(localStorageData))
-  }, [])
+  useMount(() => {
+    if (getLocalStorage(BOOKMARKLIST) === null) setLocalStorage(BOOKMARKLIST, [])
+    else setBookMarkData(getLocalStorage(BOOKMARKLIST))
+  })
 
   useEffect(() => {
-    if (localStorageData === null) localStorage.setItem(BOOKMARKLIST, JSON.stringify([]))
-    else setBookMarkData(JSON.parse(localStorageData))
-  }, [localStorageData, setBookMarkData])
+    if (getLocalStorage(BOOKMARKLIST) !== null) setBookMarkData(getLocalStorage(BOOKMARKLIST))
+  }, [setBookMarkData])
 
   return (
     <div className={styles.app}>
